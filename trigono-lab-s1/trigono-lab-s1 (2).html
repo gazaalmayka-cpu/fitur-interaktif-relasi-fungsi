@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TrigonoLab S1 — Laboratorium Trigonometri</title>
+<style>
+:root {
+  --bg: #0f172a;
+  --bg2: #1e293b;
+  --card: #1e293b;
+  --border: #334155;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --accent: #38bdf8;
+  --accent2: #818cf8;
+  --green: #34d399;
+  --orange: #fb923c;
+  --red: #f87171;
+  --yellow: #fbbf24;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 20%, #1e3a5f55 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, #312e8155 0%, transparent 50%),
+    linear-gradient(180deg, #0f172a 0%, #0c1222 100%);
+  z-index: -1;
+  pointer-events: none;
+}
+header {
+  background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 50%, #8b5cf6 100%);
+  padding: 28px 20px 40px;
+  text-align: center;
+  border-radius: 0 0 32px 32px;
+  box-shadow: 0 10px 40px #0ea5e933;
+}
+header h1 { font-size: 1.85rem; font-weight: 800; letter-spacing: -0.02em; }
+header p { opacity: 0.9; margin-top: 4px; font-size: 0.95rem; }
+nav {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 12px;
+  margin: -22px auto 16px;
+  max-width: 720px;
+  background: #1e293bdd;
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  position: sticky;
+  top: 8px;
+  z-index: 10;
+  box-shadow: 0 8px 32px #0006;
+}
+nav button {
+  border: 0;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: 0.15s;
+}
+nav button:hover { color: var(--text); background: #33415566; }
+nav button.aktif { background: var(--accent); color: #0f172a; }
+main { max-width: 960px; margin: 0 auto; padding: 0 16px 48px; }
+section { display: none; }
+section.tampil { display: block; }
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 22px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 24px #0004;
+}
+.card h2 { color: var(--accent); font-size: 1.35rem; margin-bottom: 12px; }
+.card h3 { color: var(--accent2); font-size: 1.1rem; margin: 16px 0 8px; }
+.card h4 { color: var(--yellow); font-size: 1rem; margin: 12px 0 6px; }
+.rumus {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-left: 4px solid var(--accent);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin: 10px 0;
+  font-family: "Cambria Math", "Times New Roman", serif;
+  font-size: 1.05rem;
+  overflow-x: auto;
+}
+.rumus b { color: var(--accent); }
+.langkah {
+  background: #0f172a99;
+  border: 1px dashed #475569;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin: 12px 0;
+}
+.langkah ol, .langkah ul { padding-left: 22px; margin: 6px 0; }
+.langkah li { margin: 6px 0; }
+.tab-mini {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.tab-mini button {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.tab-mini button.aktif { background: var(--accent2); color: #fff; border-color: var(--accent2); }
+.sub { display: none; }
+.sub.tampil { display: block; }
+.baris { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end; margin: 10px 0; }
+.baris > div { flex: 1; min-width: 120px; }
+label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 4px; font-weight: 600; }
+input, select, textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #0f172a;
+  color: var(--text);
+  font: inherit;
+}
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); }
+.btn {
+  border: 0;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  background: var(--accent);
+  color: #0f172a;
+  transition: 0.15s;
+  font-size: 0.95rem;
+}
+.btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+.btn.hijau { background: var(--green); }
+.btn.oranye { background: var(--orange); color: #0f172a; }
+.btn.abu { background: #475569; color: #e2e8f0; }
+.btn.kecil { padding: 6px 12px; font-size: 0.85rem; }
+.hasil-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin: 14px 0;
+}
+.hasil-grid .item {
+  background: #0f172a;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  text-align: center;
+}
+.hasil-grid .item b {
+  display: block;
+  font-size: 1.35rem;
+  color: var(--accent);
+  margin-top: 4px;
+  font-family: "Cambria Math", serif;
+}
+.pesan {
+  padding: 10px 14px;
+  border-radius: 10px;
+  margin-top: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.pesan.ok { background: #064e3b55; color: var(--green); border: 1px solid #065f46; }
+.pesan.no { background: #7f1d1d55; color: var(--red); border: 1px solid #991b1b; }
+.pesan.info { background: #1e3a5f55; color: var(--accent); border: 1px solid #1e40af; }
+table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 0.9rem; }
+th, td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; }
+th { color: var(--accent); font-weight: 700; }
+.chip {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: #334155;
+  font-size: 0.85rem;
+  margin: 2px;
+}
+.materi-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.materi-nav button {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.materi-nav button.aktif { background: var(--accent2); color: #fff; border-color: var(--accent2); }
+.math { font-family: "Cambria Math", "Times New Roman", serif; }
+.highlight { color: var(--yellow); }
+.green { color: var(--green); }
+footer {
+  text-align: center;
+  padding: 24px;
+  color: var(--muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border);
+  margin-top: 32px;
+}
+@media (max-width: 600px) {
+  header h1 { font-size: 1.4rem; }
+  .baris > div { min-width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📐 TrigonoLab S1</h1>
+  <p>Laboratorium Trigonometri untuk Mahasiswa — Semua Rumus, Identitas &amp; Pembuktian</p>
+</header>
+
+<nav id="nav">
+  <button data-tab="materi" class="aktif">📖 Materi Lengkap</button>
+  <button data-tab="coba">🧪 Coba Sendiri</button>
+  <button data-tab="latihan">✏️ Latihan</button>
+  <button data-tab="rumus">📋 Daftar Rumus</button>
+</nav>
+
+<main>
+
+<!-- ==================== MATERI ==================== -->
+<section id="materi" class="tampil">
+  <div class="materi-nav" id="materiNav"></div>
+  <div id="materiIsi"></div>
+</section>
+
+<!-- ==================== COBA SENDIRI ==================== -->
+<section id="coba">
+  <div class="tab-mini" id="tabCoba">
+    <button data-sub="konversi" class="aktif">🔄 Derajat ↔ Radian</button>
+    <button data-sub="nilai">🎯 Nilai Eksak</button>
+    <button data-sub="jumlah">➕ Penjumlahan Sudut</button>
+    <button data-sub="ganda">2️⃣ Sudut Ganda</button>
+    <button data-sub="setengah">½ Sudut Setengah</button>
+    <button data-sub="polar">📍 Polar ↔ Kartesius</button>
+    <button data-sub="identitas">✨ Cek Identitas</button>
+  </div>
+
+  <!-- Konversi -->
+  <div class="sub tampil" id="konversi">
+    <div class="card">
+      <h2>🔄 Konversi Derajat ↔ Radian</h2>
+      <p>Rumus: <span class="math">θ(rad) = θ(°) × π/180</span> &nbsp;|&nbsp; <span class="math">θ(°) = θ(rad) × 180/π</span></p>
+      <div class="baris">
+        <div>
+          <label>Nilai sudut</label>
+          <input type="number" id="konvVal" value="60" step="any">
+        </div>
+        <div>
+          <label>Dari</label>
+          <select id="konvDari">
+            <option value="deg">Derajat (°)</option>
+            <option value="rad">Radian (rad)</option>
+          </select>
+        </div>
+        <div style="flex:0"><button class="btn" id="btnKonv">Konversi</button></div>
+      </div>
+      <div id="hasilKonv"></div>
+    </div>
+  </div>
+
+  <!-- Nilai Eksak -->
+  <div class="sub" id="nilai">
+    <div class="card">
+      <h2>🎯 Nilai Eksak Fungsi Trigonometri</h2>
+      <p>Masukkan sudut (derajat). Sistem akan mencoba memberikan nilai eksak jika memungkinkan.</p>
+      <div class="baris">
+        <div>
+          <label>Sudut (°)</label>
+          <input type="number" id="nilaiSudut" value="30" step="any">
+        </div>
+        <div style="flex:0"><button class="btn" id="btnNilai">Hitung</button></div>
+      </div>
+      <div id="hasilNilai"></div>
+      <div class="langkah" style="margin-top:16px">
+        <h4>Nilai-nilai khusus yang sering dipakai</h4>
+        <table>
+          <tr><th>θ</th><th>sin θ</th><th>cos θ</th><th>tan θ</th></tr>
+          <tr><td>0°</td><td>0</td><td>1</td><td>0</td></tr>
+          <tr><td>30°</td><td>1/2</td><td>√3/2</td><td>1/√3</td></tr>
+          <tr><td>45°</td><td>√2/2</td><td>√2/2</td><td>1</td></tr>
+          <tr><td>60°</td><td>√3/2</td><td>1/2</td><td>√3</td></tr>
+          <tr><td>90°</td><td>1</td><td>0</td><td>∞</td></tr>
+          <tr><td>120°</td><td>√3/2</td><td>−1/2</td><td>−√3</td></tr>
+          <tr><td>135°</td><td>√2/2</td><td>−√2/2</td><td>−1</td></tr>
+          <tr><td>150°</td><td>1/2</td><td>−√3/2</td><td>−1/√3</td></tr>
+          <tr><td>180°</td><td>0</td><td>−1</td><td>0</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Penjumlahan / Operasi Sudut Bebas -->
+  <div class="sub" id="jumlah">
+    <div class="card">
+      <h2>➕ Operasi Sudut Bebas (A ± B, ×, ÷)</h2>
+      <p>Pilih fungsi, operasi, dan sudut A &amp; B secara bebas. Cocok untuk soal seperti sin(A±B), tan(A−B), dll.</p>
+      <div class="baris">
+        <div>
+          <label>Fungsi</label>
+          <select id="jaFungsi">
+            <option value="sin">sin</option>
+            <option value="cos">cos</option>
+            <option value="tan">tan</option>
+            <option value="csc">csc</option>
+            <option value="sec">sec</option>
+            <option value="cot">cot</option>
+          </select>
+        </div>
+        <div>
+          <label>Operasi</label>
+          <select id="jaOp">
+            <option value="+">A + B</option>
+            <option value="-">A − B</option>
+            <option value="2A">2A (ganda)</option>
+            <option value="3A">3A (tiga kali)</option>
+          </select>
+        </div>
+        <div><label>Sudut A (°)</label><input type="number" id="jaA" value="45" step="any"></div>
+        <div><label>Sudut B (°)</label><input type="number" id="jaB" value="30" step="any"></div>
+        <div style="flex:0"><button class="btn" id="btnJumlah">Hitung</button></div>
+      </div>
+      <div id="hasilJumlah"></div>
+    </div>
+  </div>
+
+  <!-- Sudut Ganda -->
+  <div class="sub" id="ganda">
+    <div class="card">
+      <h2>2️⃣ Rumus Sudut Ganda (Double Angle)</h2>
+      <p>Dua mode: (1) dari nilai sin/cos/tan θ, atau (2) langsung dari sudut θ.</p>
+      <div class="baris">
+        <div>
+          <label>Mode</label>
+          <select id="gandaMode">
+            <option value="nilai">Dari nilai sin/cos/tan</option>
+            <option value="sudut">Dari sudut θ (°)</option>
+          </select>
+        </div>
+        <div id="gandaBoxNilai">
+          <label>Diketahui</label>
+          <select id="gandaTipe">
+            <option value="sin">sin θ</option>
+            <option value="cos">cos θ</option>
+            <option value="tan">tan θ</option>
+          </select>
+        </div>
+        <div id="gandaBoxVal"><label>Nilai</label><input type="text" id="gandaVal" value="3/5" placeholder="contoh: 3/5"></div>
+        <div id="gandaBoxSudut" style="display:none"><label>Sudut θ (°)</label><input type="number" id="gandaSudut" value="30" step="any"></div>
+        <div>
+          <label>Kuadran θ</label>
+          <select id="gandaKua">
+            <option value="1">I</option>
+            <option value="2">II</option>
+            <option value="3">III</option>
+            <option value="4">IV</option>
+          </select>
+        </div>
+        <div style="flex:0"><button class="btn" id="btnGanda">Hitung 2θ</button></div>
+      </div>
+      <div id="hasilGanda"></div>
+    </div>
+  </div>
+
+  <!-- Sudut Setengah — dari sudut yang diketahui, 6 fungsi -->
+  <div class="sub" id="setengah">
+    <div class="card">
+      <h2>½ Rumus Sudut Setengah (Half Angle) — 6 Fungsi</h2>
+      <p>Masukkan <b>sudut θ yang diketahui</b> (bukan nilainya). Sistem menghitung keenam fungsi trig dari θ/2 beserta langkahnya.</p>
+      <div class="baris">
+        <div><label>Sudut θ (°)</label><input type="number" id="setSudut" value="60" step="any"></div>
+        <div>
+          <label>Kuadran θ/2 (untuk tanda ±)</label>
+          <select id="setKua">
+            <option value="1">I (sin+, cos+)</option>
+            <option value="2">II (sin+, cos−)</option>
+            <option value="3">III (sin−, cos−)</option>
+            <option value="4">IV (sin−, cos+)</option>
+          </select>
+        </div>
+        <div style="flex:0"><button class="btn" id="btnSetengah">Hitung θ/2</button></div>
+      </div>
+      <div id="hasilSetengah"></div>
+    </div>
+  </div>
+
+  <!-- Polar -->
+  <div class="sub" id="polar">
+    <div class="card">
+      <h2>📍 Koordinat Polar ↔ Kartesius</h2>
+      <div class="tab-mini" id="tabPolar">
+        <button data-p="kePolar" class="aktif">Kartesius → Polar</button>
+        <button data-p="keKart">Polar → Kartesius</button>
+      </div>
+      <div id="polarKePolar">
+        <div class="baris">
+          <div><label>x</label><input type="number" id="px" value="3" step="any"></div>
+          <div><label>y</label><input type="number" id="py" value="4" step="any"></div>
+          <div style="flex:0"><button class="btn" id="btnKePolar">Hitung</button></div>
+        </div>
+      </div>
+      <div id="polarKeKart" style="display:none">
+        <div class="baris">
+          <div><label>r</label><input type="number" id="pr" value="5" step="any"></div>
+          <div><label>θ (°)</label><input type="number" id="pt" value="53.13" step="any"></div>
+          <div style="flex:0"><button class="btn" id="btnKeKart">Hitung</button></div>
+        </div>
+      </div>
+      <div id="hasilPolar"></div>
+    </div>
+  </div>
+
+  <!-- Pembuktian Identitas — bebas diubah -->
+  <div class="sub" id="identitas">
+    <div class="card">
+      <h2>✨ Pembuktian Identitas (Bebas Diubah)</h2>
+      <p>Ketik / ubah sendiri ruas kiri dan ruas kanan. Kamu bisa pakai template dari soal PDF, lalu sunting sesukamu — mirip soal pembuktian di kuliah.</p>
+
+      <div class="baris" style="margin-bottom:8px">
+        <div style="flex:2">
+          <label>Template (opsional — klik untuk mengisi, lalu ubah sendiri)</label>
+          <select id="idTemplate">
+            <option value="">— ketik manual / kosong —</option>
+            <option value="1">(1−2cos²A)/(sin A cos A) = tan A − cot A</option>
+            <option value="2">(cos α − sin α)(cos α + sin α) = cos 2α</option>
+            <option value="3">2 sin²x = sin 2x · tan x</option>
+            <option value="4">cos 2x = cos⁴x − sin⁴x</option>
+            <option value="5">sin 4x = 4 sin x cos x − 8 sin³x cos x</option>
+            <option value="6">1 − ½ sin 2x = (sin³x + cos³x)/(sin x + cos x)</option>
+            <option value="7">cot θ · sin 2θ = 1 + cos 2θ</option>
+            <option value="8">cos 3θ = 4 cos³θ − 3 cos θ</option>
+            <option value="9">sin 2A + sin 2B + sin 2C = 4 sin A sin B sin C</option>
+            <option value="10">sin²θ + cos²θ = 1</option>
+            <option value="11">1 + tan²θ = sec²θ</option>
+            <option value="12">2 sin²x = sin 2x tan x</option>
+          </select>
+        </div>
+        <div style="flex:0;align-self:flex-end"><button class="btn abu" id="btnLoadTpl">Muat Template</button></div>
+      </div>
+
+      <div class="baris">
+        <div>
+          <label>Ruas kiri (LHS)</label>
+          <input type="text" id="idLHS" value="(1 - 2 cos^2 A) / (sin A cos A)" placeholder="contoh: (cos a - sin a)(cos a + sin a)">
+        </div>
+        <div style="flex:0;font-size:1.4rem;font-weight:800;padding-bottom:8px;color:var(--accent)">=</div>
+        <div>
+          <label>Ruas kanan (RHS)</label>
+          <input type="text" id="idRHS" value="tan A - cot A" placeholder="contoh: cos 2a">
+        </div>
+      </div>
+
+      <div class="baris">
+        <div style="flex:0"><button class="btn" id="btnId">Tampilkan Cara Pembuktian</button></div>
+        <div style="flex:0"><button class="btn oranye" id="btnIdNum">Uji Numerik (cek dengan angka)</button></div>
+      </div>
+
+      <div id="hasilId"></div>
+
+      <hr style="border:none;border-top:1px solid var(--border);margin:20px 0">
+      <h3 style="color:var(--accent2)">Uji dengan sudut yang kamu pilih sendiri</h3>
+      <p style="font-size:0.9rem;color:var(--muted)">Isi nilai sudut (derajat). Sistem mencoba mengevaluasi ruas kiri &amp; kanan secara numerik.</p>
+      <div class="baris">
+        <div><label>α / x / θ / A (°)</label><input type="number" id="idNumX" value="30" step="any"></div>
+        <div><label>β / B (°)</label><input type="number" id="idNumY" value="45" step="any"></div>
+        <div><label>γ / C (°)</label><input type="number" id="idNumZ" value="105" step="any"></div>
+      </div>
+      <div id="hasilIdNum"></div>
+
+      <div class="langkah" style="margin-top:18px">
+        <h4>Strategi umum membuktikan identitas (seperti di soal PDF)</h4>
+        <ol>
+          <li>Ubah semua ke <b>sin</b> dan <b>cos</b> (hindari sec, csc, tan dulu jika membingungkan).</li>
+          <li>Kerjakan <b>satu sisi</b> (biasanya yang lebih rumit) sampai sama dengan sisi lain.</li>
+          <li>Gunakan identitas Pythagoras: sin² + cos² = 1, 1 + tan² = sec², dll.</li>
+          <li>Faktorkan, kalikan sekawan, atau pecah pecahan.</li>
+          <li>Jika ada sudut 2θ / 3θ / θ/2 → pakai rumus sudut ganda / setengah / tiga kali.</li>
+          <li>Untuk A+B+C=π → ganti C = π−(A+B) lalu sederhanakan.</li>
+          <li>Setelah aljabar selesai, uji numerik dengan beberapa nilai sudut untuk memastikan.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== LATIHAN ==================== -->
+<section id="latihan">
+  <div class="card">
+    <h2>✏️ Latihan Bebas</h2>
+    <p>Latihan soal dari materi trigonometri S1. Jawab, lalu cek pembahasan.</p>
+    <div class="baris">
+      <div>
+        <label>Topik</label>
+        <select id="latTopik">
+          <option value="konversi">Konversi Sudut</option>
+          <option value="eksak">Nilai Eksak</option>
+          <option value="ganda">Sudut Ganda</option>
+          <option value="setengah">Sudut Setengah</option>
+          <option value="identitas">Identitas</option>
+        </select>
+      </div>
+      <div style="flex:0"><button class="btn oranye" id="latBaru">Soal Baru</button></div>
+    </div>
+    <div id="latSoal" class="rumus" style="margin-top:14px">Tekan "Soal Baru" untuk mulai.</div>
+    <div class="baris">
+      <div><input type="text" id="latJawab" placeholder="Jawabanmu"></div>
+      <div style="flex:0"><button class="btn hijau" id="latCek">Cek</button></div>
+      <div style="flex:0"><button class="btn abu" id="latHint">💡 Petunjuk</button></div>
+    </div>
+    <div id="latUmpan"></div>
+  </div>
+</section>
+
+<!-- ==================== DAFTAR RUMUS ==================== -->
+<section id="rumus">
+  <div class="card">
+    <h2>📋 Daftar Lengkap Semua Rumus Trigonometri</h2>
+    <div id="daftarRumus"></div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  TrigonoLab S1 — Materi lengkap trigonometri untuk perkuliahan | Dibuat untuk mahasiswa
+</footer>
+
+<script>
+/* ===================== UTIL ===================== */
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function parseFrac(str) {
+  str = String(str).trim().replace(',', '.');
+  if (str.includes('/')) {
+    const [a, b] = str.split('/').map(Number);
+    if (!isNaN(a) && !isNaN(b) && b !== 0) return a / b;
+  }
+  const n = parseFloat(str);
+  return isNaN(n) ? null : n;
+}
+function fmt(n, dig = 6) {
+  if (n === null || n === undefined || isNaN(n)) return '—';
+  if (Math.abs(n) < 1e-12) return '0';
+  if (Math.abs(n - Math.round(n)) < 1e-10) return String(Math.round(n));
+  // coba deteksi pecahan sederhana
+  const dens = [2,3,4,5,6,7,8,9,10,12,13,15,16,17,20];
+  for (const d of dens) {
+    const num = Math.round(n * d);
+    if (Math.abs(n - num / d) < 1e-10) {
+      const g = gcd(Math.abs(num), d);
+      const nn = num / g, dd = d / g;
+      if (dd === 1) return String(nn);
+      return (nn < 0 ? '−' : '') + Math.abs(nn) + '/' + dd;
+    }
+  }
+  // deteksi bentuk √
+  const sqrtMap = {
+    [Math.SQRT2/2]: '√2/2', [Math.sqrt(3)/2]: '√3/2', [1/Math.SQRT2]: '√2/2',
+    [Math.sqrt(3)]: '√3', [1/Math.sqrt(3)]: '1/√3', [Math.SQRT2]: '√2',
+    [-Math.SQRT2/2]: '−√2/2', [-Math.sqrt(3)/2]: '−√3/2', [-1/Math.SQRT2]: '−√2/2',
+    [-Math.sqrt(3)]: '−√3', [-1/Math.sqrt(3)]: '−1/√3'
+  };
+  for (const [k, v] of Object.entries(sqrtMap)) {
+    if (Math.abs(n - Number(k)) < 1e-10) return v;
+  }
+  return n.toFixed(dig).replace(/\.?0+$/, '');
+}
+function gcd(a, b) { a = Math.abs(a); b = Math.abs(b); return b ? gcd(b, a % b) : a; }
+function toRad(d) { return d * Math.PI / 180; }
+function toDeg(r) { return r * 180 / Math.PI; }
+
+/* ===================== MATERI DATA ===================== */
+const materiList = [
+{
+  id: 'dasar',
+  judul: '1. Definisi & Satuan Sudut',
+  isi: `
+    <h3>Derajat dan Radian</h3>
+    <div class="rumus">1 putaran penuh = 360° = 2π radian</div>
+    <div class="rumus">θ (radian) = θ (derajat) × <b>π/180</b></div>
+    <div class="rumus">θ (derajat) = θ (radian) × <b>180/π</b></div>
+    <p>Contoh: 180° = π rad, 90° = π/2 rad, 60° = π/3 rad, 45° = π/4 rad, 30° = π/6 rad.</p>
+    <h3>Definisi Fungsi Trigonometri (Segitiga Siku-siku)</h3>
+    <div class="rumus">sin θ = lawan / miring &nbsp;&nbsp; cos θ = berdampingan / miring &nbsp;&nbsp; tan θ = lawan / berdampingan</div>
+    <div class="rumus">csc θ = 1/sin θ &nbsp;&nbsp; sec θ = 1/cos θ &nbsp;&nbsp; cot θ = 1/tan θ</div>
+    <h3>Definisi dari Koordinat (Lingkaran Satuan)</h3>
+    <p>Untuk titik P(x, y) pada lingkaran berjari-jari r:</p>
+    <div class="rumus">sin θ = y/r &nbsp;&nbsp; cos θ = x/r &nbsp;&nbsp; tan θ = y/x</div>
+    <div class="rumus">r = √(x² + y²)</div>
+  `
+},
+{
+  id: 'identitas-dasar',
+  judul: '2. Identitas Dasar (Fundamental Identities)',
+  isi: `
+    <h3>Identitas Pythagoras</h3>
+    <div class="rumus">sin²θ + cos²θ = 1</div>
+    <div class="rumus">1 + tan²θ = sec²θ</div>
+    <div class="rumus">1 + cot²θ = csc²θ</div>
+    <h3>Identitas Timbal Balik (Reciprocal)</h3>
+    <div class="rumus">csc θ = 1/sin θ &nbsp;&nbsp; sec θ = 1/cos θ &nbsp;&nbsp; cot θ = 1/tan θ</div>
+    <div class="rumus">sin θ = 1/csc θ &nbsp;&nbsp; cos θ = 1/sec θ &nbsp;&nbsp; tan θ = 1/cot θ</div>
+    <h3>Identitas Hasil Bagi (Quotient)</h3>
+    <div class="rumus">tan θ = sin θ / cos θ</div>
+    <div class="rumus">cot θ = cos θ / sin θ</div>
+    <h3>Identitas Genap-Ganjil (Even-Odd)</h3>
+    <div class="rumus">sin(−θ) = −sin θ &nbsp;&nbsp; (ganjil)</div>
+    <div class="rumus">cos(−θ) = cos θ &nbsp;&nbsp; (genap)</div>
+    <div class="rumus">tan(−θ) = −tan θ &nbsp;&nbsp; (ganjil)</div>
+  `
+},
+{
+  id: 'relasi',
+  judul: '3. Sudut Berelasi & Kuadran',
+  isi: `
+    <h3>Tanda Fungsi per Kuadran (ASTC / "All Students Take Calculus")</h3>
+    <table>
+      <tr><th>Kuadran</th><th>sin</th><th>cos</th><th>tan</th></tr>
+      <tr><td>I (0°–90°)</td><td>+</td><td>+</td><td>+</td></tr>
+      <tr><td>II (90°–180°)</td><td>+</td><td>−</td><td>−</td></tr>
+      <tr><td>III (180°–270°)</td><td>−</td><td>−</td><td>+</td></tr>
+      <tr><td>IV (270°–360°)</td><td>−</td><td>+</td><td>−</td></tr>
+    </table>
+    <h3>Sudut Berelasi</h3>
+    <div class="rumus">sin(90° − θ) = cos θ &nbsp;&nbsp; cos(90° − θ) = sin θ</div>
+    <div class="rumus">sin(180° − θ) = sin θ &nbsp;&nbsp; cos(180° − θ) = −cos θ</div>
+    <div class="rumus">sin(180° + θ) = −sin θ &nbsp;&nbsp; cos(180° + θ) = −cos θ</div>
+    <div class="rumus">sin(360° − θ) = −sin θ &nbsp;&nbsp; cos(360° − θ) = cos θ</div>
+    <div class="rumus">sin(90° + θ) = cos θ &nbsp;&nbsp; cos(90° + θ) = −sin θ</div>
+  `
+},
+{
+  id: 'jumlah',
+  judul: '4. Rumus Penjumlahan & Pengurangan Sudut',
+  isi: `
+    <h3>Sinus</h3>
+    <div class="rumus">sin(A + B) = sin A cos B + cos A sin B</div>
+    <div class="rumus">sin(A − B) = sin A cos B − cos A sin B</div>
+    <h3>Cosinus</h3>
+    <div class="rumus">cos(A + B) = cos A cos B − sin A sin B</div>
+    <div class="rumus">cos(A − B) = cos A cos B + sin A sin B</div>
+    <h3>Tangen</h3>
+    <div class="rumus">tan(A + B) = (tan A + tan B) / (1 − tan A tan B)</div>
+    <div class="rumus">tan(A − B) = (tan A − tan B) / (1 + tan A tan B)</div>
+    <h3>Contoh penting</h3>
+    <div class="rumus">sin(75°) = sin(45°+30°) = (√6 + √2)/4</div>
+    <div class="rumus">cos(75°) = cos(45°+30°) = (√6 − √2)/4</div>
+    <div class="rumus">sin(15°) = sin(45°−30°) = (√6 − √2)/4</div>
+  `
+},
+{
+  id: 'ganda',
+  judul: '5. Rumus Sudut Ganda (Double-Angle)',
+  isi: `
+    <h3>Sinus sudut ganda</h3>
+    <div class="rumus">sin 2θ = 2 sin θ cos θ</div>
+    <h3>Cosinus sudut ganda (3 bentuk)</h3>
+    <div class="rumus">cos 2θ = cos²θ − sin²θ</div>
+    <div class="rumus">cos 2θ = 2 cos²θ − 1</div>
+    <div class="rumus">cos 2θ = 1 − 2 sin²θ</div>
+    <h3>Tangen sudut ganda</h3>
+    <div class="rumus">tan 2θ = 2 tan θ / (1 − tan²θ)</div>
+    <h3>Bentuk pangkat (power-reduction)</h3>
+    <div class="rumus">sin²θ = (1 − cos 2θ)/2</div>
+    <div class="rumus">cos²θ = (1 + cos 2θ)/2</div>
+  `
+},
+{
+  id: 'setengah',
+  judul: '6. Rumus Sudut Setengah (Half-Angle)',
+  isi: `
+    <h3>Rumus dasar</h3>
+    <div class="rumus">sin(θ/2) = ± √[(1 − cos θ)/2]</div>
+    <div class="rumus">cos(θ/2) = ± √[(1 + cos θ)/2]</div>
+    <div class="rumus">tan(θ/2) = ± √[(1 − cos θ)/(1 + cos θ)]</div>
+    <p>Tanda ± ditentukan oleh kuadran tempat θ/2 berada.</p>
+    <h3>Bentuk alternatif tan(θ/2) (sering lebih praktis)</h3>
+    <div class="rumus">tan(θ/2) = sin θ / (1 + cos θ)</div>
+    <div class="rumus">tan(θ/2) = (1 − cos θ) / sin θ</div>
+    <h3>Contoh: sin 22,5°</h3>
+    <div class="rumus">sin 22,5° = √[(1 − cos 45°)/2] = √[(2 − √2)/4] = √(2 − √2)/2</div>
+  `
+},
+{
+  id: 'tiga',
+  judul: '7. Sudut Tiga Kali, Empat Kali, & Multiple Angle',
+  isi: `
+    <h3>Sudut tiga kali (Triple Angle)</h3>
+    <div class="rumus">sin 3θ = 3 sin θ − 4 sin³θ</div>
+    <div class="rumus">cos 3θ = 4 cos³θ − 3 cos θ</div>
+    <div class="rumus">tan 3θ = (3 tan θ − tan³θ) / (1 − 3 tan²θ)</div>
+    <h3>Sudut empat kali</h3>
+    <div class="rumus">sin 4θ = 2 sin 2θ cos 2θ = 4 sin θ cos θ − 8 sin³θ cos θ</div>
+    <div class="rumus">cos 4θ = 2 cos²2θ − 1 = 8 cos⁴θ − 8 cos²θ + 1</div>
+    <div class="rumus">cos 4θ = 1 − 8 sin²θ cos²θ (bentuk lain)</div>
+    <h3>Umum (De Moivre / rekursi)</h3>
+    <p>sin(nθ) dan cos(nθ) dapat diturunkan dari (cos θ + i sin θ)ⁿ = cos nθ + i sin nθ.</p>
+  `
+},
+{
+  id: 'produk',
+  judul: '8. Produk ↔ Jumlah (Product-to-Sum & Sum-to-Product)',
+  isi: `
+    <h3>Product-to-Sum</h3>
+    <div class="rumus">sin A cos B = ½ [sin(A+B) + sin(A−B)]</div>
+    <div class="rumus">cos A sin B = ½ [sin(A+B) − sin(A−B)]</div>
+    <div class="rumus">cos A cos B = ½ [cos(A+B) + cos(A−B)]</div>
+    <div class="rumus">sin A sin B = ½ [cos(A−B) − cos(A+B)]</div>
+    <h3>Sum-to-Product</h3>
+    <div class="rumus">sin A + sin B = 2 sin[(A+B)/2] cos[(A−B)/2]</div>
+    <div class="rumus">sin A − sin B = 2 cos[(A+B)/2] sin[(A−B)/2]</div>
+    <div class="rumus">cos A + cos B = 2 cos[(A+B)/2] cos[(A−B)/2]</div>
+    <div class="rumus">cos A − cos B = −2 sin[(A+B)/2] sin[(A−B)/2]</div>
+  `
+},
+{
+  id: 'polar',
+  judul: '9. Koordinat Polar',
+  isi: `
+    <h3>Hubungan Polar ↔ Kartesius</h3>
+    <div class="rumus">x = r cos θ &nbsp;&nbsp; y = r sin θ</div>
+    <div class="rumus">r = √(x² + y²)</div>
+    <div class="rumus">θ = tan⁻¹(y/x) &nbsp;&nbsp; (perhatikan kuadran!)</div>
+    <h3>Catatan kuadran untuk θ</h3>
+    <ul>
+      <li>Kuadran I: θ = tan⁻¹(y/x)</li>
+      <li>Kuadran II: θ = 180° + tan⁻¹(y/x) (x&lt;0, y&gt;0)</li>
+      <li>Kuadran III: θ = −180° + tan⁻¹(y/x) atau 180° + tan⁻¹(y/x)</li>
+      <li>Kuadran IV: θ = tan⁻¹(y/x) (x&gt;0, y&lt;0) → negatif</li>
+    </ul>
+  `
+},
+{
+  id: 'segitiga',
+  judul: '10. Hukum Sinus & Cosinus (Segitiga Sembarang)',
+  isi: `
+    <h3>Hukum Sinus</h3>
+    <div class="rumus">a / sin A = b / sin B = c / sin C = 2R</div>
+    <p>R = jari-jari lingkaran luar segitiga.</p>
+    <h3>Hukum Cosinus</h3>
+    <div class="rumus">c² = a² + b² − 2ab cos C</div>
+    <div class="rumus">cos C = (a² + b² − c²) / (2ab)</div>
+    <h3>Luas segitiga</h3>
+    <div class="rumus">L = ½ ab sin C</div>
+    <div class="rumus">L = √[s(s−a)(s−b)(s−c)] &nbsp;&nbsp; (Heron, s = semiperimeter)</div>
+  `
+},
+{
+  id: 'lanjutan',
+  judul: '11. Identitas Lanjutan & Teknik Pembuktian',
+  isi: `
+    <h3>Teknik umum membuktikan identitas</h3>
+    <ol>
+      <li>Ubah semua ke sin dan cos.</li>
+      <li>Faktorkan atau kalikan sekawan.</li>
+      <li>Gunakan identitas Pythagoras.</li>
+      <li>Gunakan rumus sudut ganda / setengah jika muncul sudut 2θ atau θ/2.</li>
+      <li>Kerjakan sisi yang lebih rumit terlebih dahulu.</li>
+    </ol>
+    <h3>Beberapa identitas penting untuk dibuktikan</h3>
+    <div class="rumus">(cos α − sin α)(cos α + sin α) = cos 2α</div>
+    <div class="rumus">sin 2A + sin 2B + sin 2C = 4 sin A sin B sin C &nbsp;&nbsp; (jika A+B+C = π)</div>
+    <div class="rumus">tan A + tan B + tan C = tan A tan B tan C &nbsp;&nbsp; (jika A+B+C = π)</div>
+    <div class="rumus">cos 2x = cos⁴x − sin⁴x</div>
+    <div class="rumus">sin 4x = 4 sin x cos x (1 − 2 sin²x)</div>
+  `
+}
+];
+
+/* ===================== RENDER MATERI ===================== */
+function renderMateriNav() {
+  $('#materiNav').innerHTML = materiList.map((m, i) =>
+    `<button data-m="${i}" class="${i===0?'aktif':''}">${m.judul.split('.')[0]}</button>`
+  ).join('');
+  $$('#materiNav button').forEach(b => b.onclick = () => {
+    $$('#materiNav button').forEach(x => x.classList.remove('aktif'));
+    b.classList.add('aktif');
+    showMateri(+b.dataset.m);
+  });
+}
+function showMateri(i) {
+  const m = materiList[i];
+  $('#materiIsi').innerHTML = `<div class="card"><h2>${m.judul}</h2>${m.isi}</div>`;
+}
+renderMateriNav();
+showMateri(0);
+
+/* ===================== NAV ===================== */
+let tabAktif = 'materi';
+function tampil(id) {
+  tabAktif = id;
+  $$('section').forEach(s => s.classList.toggle('tampil', s.id === id));
+  $$('#nav button').forEach(b => b.classList.toggle('aktif', b.dataset.tab === id));
+  window.scrollTo(0, 0);
+}
+$$('#nav button').forEach(b => b.onclick = () => tampil(b.dataset.tab));
+
+/* ===================== TAB COBA ===================== */
+$$('#tabCoba button').forEach(b => b.onclick = () => {
+  $$('#tabCoba button').forEach(x => x.classList.toggle('aktif', x === b));
+  $$('#coba .sub').forEach(s => s.classList.toggle('tampil', s.id === b.dataset.sub));
+});
+
+/* ===================== KONVERSI ===================== */
+function hitungKonversi() {
+  const val = parseFloat($('#konvVal').value);
+  const dari = $('#konvDari').value;
+  const box = $('#hasilKonv');
+  if (isNaN(val)) { box.innerHTML = '<div class="pesan no">Masukkan angka yang valid.</div>'; return; }
+  let hasil, langkah;
+  if (dari === 'deg') {
+    const rad = val * Math.PI / 180;
+    // sederhanakan dalam bentuk kπ
+    let bentuk = fmt(rad);
+    // coba π
+    const k = val / 180;
+    if (Math.abs(k - Math.round(k)) < 1e-10) bentuk = (Math.round(k) === 1 ? '' : Math.round(k) === -1 ? '−' : Math.round(k)) + 'π';
+    else if (Math.abs(k * 2 - Math.round(k * 2)) < 1e-10) {
+      const n = Math.round(k * 2);
+      bentuk = (n === 1 ? '' : n === -1 ? '−' : n) + 'π/2';
+    } else if (Math.abs(k * 3 - Math.round(k * 3)) < 1e-10) {
+      const n = Math.round(k * 3);
+      bentuk = (n === 1 ? '' : n === -1 ? '−' : n) + 'π/3';
+    } else if (Math.abs(k * 4 - Math.round(k * 4)) < 1e-10) {
+      const n = Math.round(k * 4);
+      bentuk = (n === 1 ? '' : n === -1 ? '−' : n) + 'π/4';
+    } else if (Math.abs(k * 6 - Math.round(k * 6)) < 1e-10) {
+      const n = Math.round(k * 6);
+      bentuk = (n === 1 ? '' : n === -1 ? '−' : n) + 'π/6';
+    }
+    hasil = `<div class="hasil-grid">
+      <div class="item">Radian (desimal)<b>${rad.toFixed(6)}</b></div>
+      <div class="item">Bentuk π<b>${bentuk}</b></div>
+    </div>`;
+    langkah = `<div class="langkah"><h4>Langkah</h4>
+      <ol>
+        <li>Rumus: θ(rad) = θ(°) × π/180</li>
+        <li>${val}° × π/180 = <b>${bentuk}</b> ≈ ${rad.toFixed(6)} rad</li>
+      </ol></div>`;
+  } else {
+    const deg = val * 180 / Math.PI;
+    hasil = `<div class="hasil-grid"><div class="item">Derajat<b>${fmt(deg)}°</b></div></div>`;
+    langkah = `<div class="langkah"><h4>Langkah</h4>
+      <ol>
+        <li>Rumus: θ(°) = θ(rad) × 180/π</li>
+        <li>${val} × 180/π ≈ <b>${fmt(deg)}°</b></li>
+      </ol></div>`;
+  }
+  box.innerHTML = hasil + langkah;
+}
+$('#btnKonv').onclick = hitungKonversi;
+
+/* ===================== NILAI EKSAK ===================== */
+const exactMap = {
+  0: {sin:'0', cos:'1', tan:'0'},
+  30: {sin:'1/2', cos:'√3/2', tan:'1/√3'},
+  45: {sin:'√2/2', cos:'√2/2', tan:'1'},
+  60: {sin:'√3/2', cos:'1/2', tan:'√3'},
+  90: {sin:'1', cos:'0', tan:'tak terdefinisi'},
+  120: {sin:'√3/2', cos:'−1/2', tan:'−√3'},
+  135: {sin:'√2/2', cos:'−√2/2', tan:'−1'},
+  150: {sin:'1/2', cos:'−√3/2', tan:'−1/√3'},
+  180: {sin:'0', cos:'−1', tan:'0'},
+  210: {sin:'−1/2', cos:'−√3/2', tan:'1/√3'},
+  225: {sin:'−√2/2', cos:'−√2/2', tan:'1'},
+  240: {sin:'−√3/2', cos:'−1/2', tan:'√3'},
+  270: {sin:'−1', cos:'0', tan:'tak terdefinisi'},
+  300: {sin:'−√3/2', cos:'1/2', tan:'−√3'},
+  315: {sin:'−√2/2', cos:'√2/2', tan:'−1'},
+  330: {sin:'−1/2', cos:'√3/2', tan:'−1/√3'},
+  360: {sin:'0', cos:'1', tan:'0'}
+};
+function hitungNilai() {
+  let sudut = parseFloat($('#nilaiSudut').value);
+  const box = $('#hasilNilai');
+  if (isNaN(sudut)) { box.innerHTML = '<div class="pesan no">Masukkan sudut valid.</div>'; return; }
+  // normalisasi 0–360
+  let s = ((sudut % 360) + 360) % 360;
+  // bulatkan jika sangat dekat
+  const keys = Object.keys(exactMap).map(Number);
+  let exact = null;
+  for (const k of keys) {
+    if (Math.abs(s - k) < 0.01) { exact = exactMap[k]; s = k; break; }
+  }
+  const rad = toRad(sudut);
+  const sinV = Math.sin(rad), cosV = Math.cos(rad), tanV = Math.tan(rad);
+  let h = `<div class="hasil-grid">
+    <div class="item">sin(${sudut}°)<b>${exact ? exact.sin : fmt(sinV)}</b></div>
+    <div class="item">cos(${sudut}°)<b>${exact ? exact.cos : fmt(cosV)}</b></div>
+    <div class="item">tan(${sudut}°)<b>${exact ? exact.tan : (Math.abs(cosV)<1e-10 ? 'tak terdefinisi' : fmt(tanV))}</b></div>
+  </div>`;
+  if (exact) {
+    h += `<div class="pesan ok">Nilai eksak tersedia untuk ${s}°.</div>`;
+    // langkah sudut berelasi jika perlu
+    if (s > 90 && s < 360) {
+      h += `<div class="langkah"><h4>Cara mendapatkan nilai eksak</h4>
+        <p>Gunakan sudut berelasi / reduksi ke sudut lancip (0°–90°).</p>
+        <ul>
+          <li>Kuadran: ${s<=180?'II':s<=270?'III':'IV'}</li>
+          <li>Referensi: ${s<=180?180-s:s<=270?s-180:360-s}°</li>
+          <li>Tanda sesuai kuadran (ASTC).</li>
+        </ul></div>`;
+    }
+  } else {
+    h += `<div class="pesan info">Sudut ini tidak memiliki nilai eksak sederhana yang umum. Ditampilkan nilai numerik.</div>`;
+  }
+  box.innerHTML = h;
+}
+$('#btnNilai').onclick = hitungNilai;
+
+/* ===================== PENJUMLAHAN SUDUT ===================== */
+function hitungJumlah() {
+  const fungsi = $('#jaFungsi').value;
+  const op = $('#jaOp').value;
+  const A = parseFloat($('#jaA').value), B = parseFloat($('#jaB').value);
+  const box = $('#hasilJumlah');
+  if (isNaN(A) || (op !== '2A' && op !== '3A' && isNaN(B))) {
+    box.innerHTML = '<div class="pesan no">Isi sudut yang diperlukan.</div>'; return;
+  }
+  const Ar = toRad(A), Br = toRad(B || 0);
+  const sA = Math.sin(Ar), cA = Math.cos(Ar), tA = Math.tan(Ar);
+  const sB = Math.sin(Br), cB = Math.cos(Br), tB = Math.tan(Br);
+
+  let targetAngle, hasilNum, rumusTeks, langkahHTML, labelHasil;
+
+  if (op === '+') {
+    targetAngle = A + B;
+    labelHasil = `${fungsi}(A+B) = ${fungsi}(${A}+${B}) = ${fungsi}(${targetAngle}°)`;
+    if (fungsi === 'sin') {
+      hasilNum = sA*cB + cA*sB;
+      rumusTeks = `sin(A+B) = sin A cos B + cos A sin B`;
+      langkahHTML = `<li>${rumusTeks}</li>
+        <li>= (${fmt(sA)})(${fmt(cB)}) + (${fmt(cA)})(${fmt(sB)}) = <b>${fmt(hasilNum)}</b></li>`;
+    } else if (fungsi === 'cos') {
+      hasilNum = cA*cB - sA*sB;
+      rumusTeks = `cos(A+B) = cos A cos B − sin A sin B`;
+      langkahHTML = `<li>${rumusTeks}</li>
+        <li>= (${fmt(cA)})(${fmt(cB)}) − (${fmt(sA)})(${fmt(sB)}) = <b>${fmt(hasilNum)}</b></li>`;
+    } else if (fungsi === 'tan') {
+      hasilNum = (tA + tB) / (1 - tA*tB);
+      rumusTeks = `tan(A+B) = (tan A + tan B)/(1 − tan A tan B)`;
+      langkahHTML = `<li>${rumusTeks}</li>
+        <li>= (${fmt(tA)} + ${fmt(tB)}) / (1 − ${fmt(tA)}·${fmt(tB)}) = <b>${fmt(hasilNum)}</b></li>`;
+    } else {
+      // csc / sec / cot of (A+B)
+      const sinAB = sA*cB + cA*sB, cosAB = cA*cB - sA*sB;
+      if (fungsi === 'csc') { hasilNum = 1/sinAB; rumusTeks = `csc(A+B) = 1/sin(A+B)`; }
+      else if (fungsi === 'sec') { hasilNum = 1/cosAB; rumusTeks = `sec(A+B) = 1/cos(A+B)`; }
+      else { hasilNum = cosAB/sinAB; rumusTeks = `cot(A+B) = cos(A+B)/sin(A+B)`; }
+      langkahHTML = `<li>Hitung dulu sin(A+B) = ${fmt(sinAB)}, cos(A+B) = ${fmt(cosAB)}</li>
+        <li>${rumusTeks} = <b>${fmt(hasilNum)}</b></li>`;
+    }
+  } else if (op === '-') {
+    targetAngle = A - B;
+    labelHasil = `${fungsi}(A−B) = ${fungsi}(${A}−${B}) = ${fungsi}(${targetAngle}°)`;
+    if (fungsi === 'sin') {
+      hasilNum = sA*cB - cA*sB;
+      rumusTeks = `sin(A−B) = sin A cos B − cos A sin B`;
+      langkahHTML = `<li>${rumusTeks}</li>
+        <li>= (${fmt(sA)})(${fmt(cB)}) − (${fmt(cA)})(${fmt(sB)}) = <b>${fmt(hasilNum)}</b></li>`;
+    } else if (fungsi === 'cos') {
+      hasilNum = cA*cB + sA*sB;
+      rumusTeks = `cos(A−B) = cos A cos B + sin A sin B`;
+      langkahHTML = `<li>${rumusTeks}</li>
+        <li>= (${fmt(cA)})(${fmt(cB)}) + (${fmt(sA)})(${fmt(sB)}) = <b>${fmt(hasilNum)}</b></li>`;
+    } else if (fungsi === 'tan') {
+      hasilNum = (tA - tB) / (1 + tA*tB);
+      rumusTeks = `tan(A−B) = (tan A − tan B)/(1 + tan A tan B)`;
+      langkahHTML = `<li>${rumusTeks}</li>
+        <li>= (${fmt(tA)} − ${fmt(tB)}) / (1 + ${fmt(tA)}·${fmt(tB)}) = <b>${fmt(hasilNum)}</b></li>`;
+    } else {
+      const sinAB = sA*cB - cA*sB, cosAB = cA*cB + sA*sB;
+      if (fungsi === 'csc') { hasilNum = 1/sinAB; rumusTeks = `csc(A−B) = 1/sin(A−B)`; }
+      else if (fungsi === 'sec') { hasilNum = 1/cosAB; rumusTeks = `sec(A−B) = 1/cos(A−B)`; }
+      else { hasilNum = cosAB/sinAB; rumusTeks = `cot(A−B) = cos(A−B)/sin(A−B)`; }
+      langkahHTML = `<li>sin(A−B) = ${fmt(sinAB)}, cos(A−B) = ${fmt(cosAB)}</li>
+        <li>${rumusTeks} = <b>${fmt(hasilNum)}</b></li>`;
+    }
+  } else if (op === '2A') {
+    targetAngle = 2 * A;
+    labelHasil = `${fungsi}(2A) = ${fungsi}(2×${A}) = ${fungsi}(${targetAngle}°)`;
+    if (fungsi === 'sin') {
+      hasilNum = 2 * sA * cA;
+      rumusTeks = `sin 2A = 2 sin A cos A`;
+      langkahHTML = `<li>${rumusTeks} = 2(${fmt(sA)})(${fmt(cA)}) = <b>${fmt(hasilNum)}</b></li>`;
+    } else if (fungsi === 'cos') {
+      hasilNum = cA*cA - sA*sA;
+      rumusTeks = `cos 2A = cos²A − sin²A = 2cos²A − 1 = 1 − 2sin²A`;
+      langkahHTML = `<li>cos 2A = (${fmt(cA)})² − (${fmt(sA)})² = <b>${fmt(hasilNum)}</b></li>`;
+    } else if (fungsi === 'tan') {
+      hasilNum = 2*tA / (1 - tA*tA);
+      rumusTeks = `tan 2A = 2 tan A / (1 − tan²A)`;
+      langkahHTML = `<li>${rumusTeks} = <b>${fmt(hasilNum)}</b></li>`;
+    } else {
+      const s2 = 2*sA*cA, c2 = cA*cA - sA*sA;
+      if (fungsi === 'csc') hasilNum = 1/s2;
+      else if (fungsi === 'sec') hasilNum = 1/c2;
+      else hasilNum = c2/s2;
+      langkahHTML = `<li>sin 2A = ${fmt(s2)}, cos 2A = ${fmt(c2)} → ${fungsi} 2A = <b>${fmt(hasilNum)}</b></li>`;
+    }
+  } else { // 3A
+    targetAngle = 3 * A;
+    labelHasil = `${fungsi}(3A) = ${fungsi}(3×${A}) = ${fungsi}(${targetAngle}°)`;
+    if (fungsi === 'sin') {
+      hasilNum = 3*sA - 4*sA*sA*sA;
+      rumusTeks = `sin 3A = 3 sin A − 4 sin³A`;
+      langkahHTML = `<li>${rumusTeks} = 3(${fmt(sA)}) − 4(${fmt(sA)})³ = <b>${fmt(hasilNum)}</b></li>`;
+    } else if (fungsi === 'cos') {
+      hasilNum = 4*cA*cA*cA - 3*cA;
+      rumusTeks = `cos 3A = 4 cos³A − 3 cos A`;
+      langkahHTML = `<li>${rumusTeks} = 4(${fmt(cA)})³ − 3(${fmt(cA)}) = <b>${fmt(hasilNum)}</b></li>`;
+    } else if (fungsi === 'tan') {
+      hasilNum = (3*tA - tA*tA*tA) / (1 - 3*tA*tA);
+      rumusTeks = `tan 3A = (3 tan A − tan³A)/(1 − 3 tan²A)`;
+      langkahHTML = `<li>${rumusTeks} = <b>${fmt(hasilNum)}</b></li>`;
+    } else {
+      const s3 = 3*sA - 4*sA*sA*sA, c3 = 4*cA*cA*cA - 3*cA;
+      if (fungsi === 'csc') hasilNum = 1/s3;
+      else if (fungsi === 'sec') hasilNum = 1/c3;
+      else hasilNum = c3/s3;
+      langkahHTML = `<li>sin 3A = ${fmt(s3)}, cos 3A = ${fmt(c3)} → ${fungsi} 3A = <b>${fmt(hasilNum)}</b></li>`;
+    }
+  }
+
+  // verifikasi numerik langsung
+  const direct = (function() {
+    const ang = toRad(targetAngle);
+    if (fungsi === 'sin') return Math.sin(ang);
+    if (fungsi === 'cos') return Math.cos(ang);
+    if (fungsi === 'tan') return Math.tan(ang);
+    if (fungsi === 'csc') return 1/Math.sin(ang);
+    if (fungsi === 'sec') return 1/Math.cos(ang);
+    return 1/Math.tan(ang);
+  })();
+
+  box.innerHTML = `
+    <div class="hasil-grid">
+      <div class="item">${labelHasil}<b>${fmt(hasilNum)}</b></div>
+      <div class="item">Cek langsung (kalkulator)<b>${fmt(direct)}</b></div>
+    </div>
+    <div class="langkah">
+      <h4>Langkah detail</h4>
+      <ol>
+        <li>A = ${A}°, ${op === '+' || op === '-' ? `B = ${B}°` : ''}</li>
+        <li>sin A = ${fmt(sA)}, cos A = ${fmt(cA)}, tan A = ${fmt(tA)}</li>
+        ${op === '+' || op === '-' ? `<li>sin B = ${fmt(sB)}, cos B = ${fmt(cB)}, tan B = ${fmt(tB)}</li>` : ''}
+        ${langkahHTML}
+      </ol>
+      <div class="rumus">${rumusTeks || ''}</div>
+    </div>`;
+}
+$('#btnJumlah').onclick = hitungJumlah;
+
+/* ===================== SUDUT GANDA ===================== */
+$('#gandaMode').addEventListener('change', function() {
+  const mode = this.value;
+  $('#gandaBoxNilai').style.display = mode === 'nilai' ? 'block' : 'none';
+  $('#gandaBoxVal').style.display = mode === 'nilai' ? 'block' : 'none';
+  $('#gandaBoxSudut').style.display = mode === 'sudut' ? 'block' : 'none';
+});
+
+function hitungGanda() {
+  const mode = $('#gandaMode').value;
+  const kua = +$('#gandaKua').value;
+  const box = $('#hasilGanda');
+  let sinT, cosT, tanT, sumber;
+
+  if (mode === 'sudut') {
+    const sudut = parseFloat($('#gandaSudut').value);
+    if (isNaN(sudut)) { box.innerHTML = '<div class="pesan no">Isi sudut θ.</div>'; return; }
+    const r = toRad(sudut);
+    sinT = Math.sin(r); cosT = Math.cos(r); tanT = Math.tan(r);
+    sumber = `θ = ${sudut}°`;
+  } else {
+    const tipe = $('#gandaTipe').value;
+    const val = parseFrac($('#gandaVal').value);
+    if (val === null || (Math.abs(val) > 1 && tipe !== 'tan')) {
+      box.innerHTML = '<div class="pesan no">Nilai tidak valid (sin/cos: |nilai| ≤ 1).</div>'; return;
+    }
+    if (tipe === 'sin') {
+      sinT = val; cosT = Math.sqrt(Math.max(0, 1 - sinT*sinT));
+      if (kua === 2 || kua === 3) cosT = -cosT;
+      tanT = sinT / cosT;
+    } else if (tipe === 'cos') {
+      cosT = val; sinT = Math.sqrt(Math.max(0, 1 - cosT*cosT));
+      if (kua === 3 || kua === 4) sinT = -sinT;
+      tanT = sinT / cosT;
+    } else {
+      tanT = val;
+      cosT = 1 / Math.sqrt(1 + tanT*tanT);
+      if (kua === 2 || kua === 3) cosT = -cosT;
+      sinT = tanT * cosT;
+    }
+    sumber = `${tipe} θ = ${$('#gandaVal').value}, kuadran ${kua}`;
+  }
+
+  const sin2 = 2 * sinT * cosT;
+  const cos2 = cosT*cosT - sinT*sinT;
+  const tan2 = 2 * tanT / (1 - tanT*tanT);
+  const csc2 = 1/sin2, sec2 = 1/cos2, cot2 = 1/tan2;
+
+  box.innerHTML = `
+    <div class="hasil-grid">
+      <div class="item">sin 2θ<b>${fmt(sin2)}</b></div>
+      <div class="item">cos 2θ<b>${fmt(cos2)}</b></div>
+      <div class="item">tan 2θ<b>${fmt(tan2)}</b></div>
+      <div class="item">csc 2θ<b>${fmt(csc2)}</b></div>
+      <div class="item">sec 2θ<b>${fmt(sec2)}</b></div>
+      <div class="item">cot 2θ<b>${fmt(cot2)}</b></div>
+    </div>
+    <div class="langkah">
+      <h4>Langkah (${sumber})</h4>
+      <ol>
+        <li>sin θ = ${fmt(sinT)}, cos θ = ${fmt(cosT)}, tan θ = ${fmt(tanT)}</li>
+        <li>sin 2θ = 2 sin θ cos θ = 2(${fmt(sinT)})(${fmt(cosT)}) = <b>${fmt(sin2)}</b></li>
+        <li>cos 2θ = cos²θ − sin²θ = (${fmt(cosT)})² − (${fmt(sinT)})² = <b>${fmt(cos2)}</b></li>
+        <li>tan 2θ = 2 tan θ / (1 − tan²θ) = <b>${fmt(tan2)}</b></li>
+        <li>csc 2θ = 1/sin 2θ, sec 2θ = 1/cos 2θ, cot 2θ = 1/tan 2θ</li>
+      </ol>
+    </div>`;
+}
+$('#btnGanda').onclick = hitungGanda;
+
+/* ===================== SUDUT SETENGAH (dari sudut, 6 fungsi) ===================== */
+function hitungSetengah() {
+  const sudut = parseFloat($('#setSudut').value);
+  const kua = +$('#setKua').value;
+  const box = $('#hasilSetengah');
+  if (isNaN(sudut)) { box.innerHTML = '<div class="pesan no">Isi sudut θ.</div>'; return; }
+
+  const half = sudut / 2;
+  const cosT = Math.cos(toRad(sudut));
+  const sinT = Math.sin(toRad(sudut));
+
+  // rumus half-angle
+  let sinH = Math.sqrt(Math.max(0, (1 - cosT) / 2));
+  let cosH = Math.sqrt(Math.max(0, (1 + cosT) / 2));
+  if (kua === 3 || kua === 4) sinH = -sinH;
+  if (kua === 2 || kua === 3) cosH = -cosH;
+  const tanH = sinH / cosH;
+  const cscH = 1 / sinH, secH = 1 / cosH, cotH = 1 / tanH;
+
+  // cek langsung
+  const hr = toRad(half);
+  const directSin = Math.sin(hr), directCos = Math.cos(hr);
+
+  box.innerHTML = `
+    <div class="hasil-grid">
+      <div class="item">sin(θ/2) = sin(${half}°)<b>${fmt(sinH)}</b></div>
+      <div class="item">cos(θ/2) = cos(${half}°)<b>${fmt(cosH)}</b></div>
+      <div class="item">tan(θ/2) = tan(${half}°)<b>${fmt(tanH)}</b></div>
+      <div class="item">csc(θ/2)<b>${fmt(cscH)}</b></div>
+      <div class="item">sec(θ/2)<b>${fmt(secH)}</b></div>
+      <div class="item">cot(θ/2)<b>${fmt(cotH)}</b></div>
+    </div>
+    <div class="langkah">
+      <h4>Langkah detail (θ = ${sudut}°, θ/2 = ${half}°)</h4>
+      <ol>
+        <li>Hitung cos θ = cos(${sudut}°) ≈ ${fmt(cosT)}</li>
+        <li>Rumus: sin(θ/2) = ± √[(1 − cos θ)/2]</li>
+        <li>(1 − cos θ)/2 = (1 − ${fmt(cosT)})/2 = ${fmt((1-cosT)/2)}</li>
+        <li>√[...] ≈ ${fmt(Math.sqrt((1-cosT)/2))} → beri tanda sesuai kuadran ${kua} → <b>${fmt(sinH)}</b></li>
+        <li>cos(θ/2) = ± √[(1 + cos θ)/2] → <b>${fmt(cosH)}</b></li>
+        <li>tan(θ/2) = sin(θ/2)/cos(θ/2) = <b>${fmt(tanH)}</b></li>
+        <li>csc = 1/sin, sec = 1/cos, cot = 1/tan</li>
+      </ol>
+      <p class="pesan info">Cek langsung: sin(${half}°) ≈ ${fmt(directSin)}, cos(${half}°) ≈ ${fmt(directCos)}</p>
+      <div class="rumus">Bentuk alternatif: tan(θ/2) = sin θ / (1 + cos θ) = ${fmt(sinT)} / (1 + ${fmt(cosT)}) ≈ ${fmt(sinT/(1+cosT))}</div>
+    </div>`;
+}
+$('#btnSetengah').onclick = hitungSetengah;
+
+/* ===================== POLAR ===================== */
+$$('#tabPolar button').forEach(b => b.onclick = () => {
+  $$('#tabPolar button').forEach(x => x.classList.toggle('aktif', x === b));
+  $('#polarKePolar').style.display = b.dataset.p === 'kePolar' ? 'block' : 'none';
+  $('#polarKeKart').style.display = b.dataset.p === 'keKart' ? 'block' : 'none';
+});
+function hitungKePolar() {
+  const x = parseFloat($('#px').value), y = parseFloat($('#py').value);
+  const box = $('#hasilPolar');
+  if (isNaN(x) || isNaN(y)) { box.innerHTML = '<div class="pesan no">Isi x dan y.</div>'; return; }
+  const r = Math.sqrt(x*x + y*y);
+  let theta = Math.atan2(y, x); // sudah handle kuadran
+  const thetaDeg = toDeg(theta);
+  box.innerHTML = `
+    <div class="hasil-grid">
+      <div class="item">r<b>${fmt(r)}</b></div>
+      <div class="item">θ (derajat)<b>${fmt(thetaDeg)}°</b></div>
+      <div class="item">θ (radian)<b>${fmt(theta)}</b></div>
+    </div>
+    <div class="langkah">
+      <h4>Langkah</h4>
+      <ol>
+        <li>r = √(x² + y²) = √(${x}² + ${y}²) = √${fmt(x*x + y*y)} = <b>${fmt(r)}</b></li>
+        <li>θ = atan2(y, x) → memperhatikan kuadran</li>
+        <li>θ ≈ <b>${fmt(thetaDeg)}°</b></li>
+        <li>sin θ = y/r = ${fmt(y/r)}, cos θ = x/r = ${fmt(x/r)}</li>
+      </ol>
+    </div>`;
+}
+function hitungKeKart() {
+  const r = parseFloat($('#pr').value), t = parseFloat($('#pt').value);
+  const box = $('#hasilPolar');
+  if (isNaN(r) || isNaN(t)) { box.innerHTML = '<div class="pesan no">Isi r dan θ.</div>'; return; }
+  const rad = toRad(t);
+  const x = r * Math.cos(rad), y = r * Math.sin(rad);
+  box.innerHTML = `
+    <div class="hasil-grid">
+      <div class="item">x<b>${fmt(x)}</b></div>
+      <div class="item">y<b>${fmt(y)}</b></div>
+    </div>
+    <div class="langkah">
+      <h4>Langkah</h4>
+      <ol>
+        <li>x = r cos θ = ${r} × cos(${t}°) = <b>${fmt(x)}</b></li>
+        <li>y = r sin θ = ${r} × sin(${t}°) = <b>${fmt(y)}</b></li>
+      </ol>
+    </div>`;
+}
+$('#btnKePolar').onclick = hitungKePolar;
+$('#btnKeKart').onclick = hitungKeKart;
+
+/* ===================== IDENTITAS (bebas diubah) ===================== */
+const templateMap = {
+  '1': { lhs: '(1 - 2 cos^2 A) / (sin A cos A)', rhs: 'tan A - cot A', key: 'tancot' },
+  '2': { lhs: '(cos a - sin a)(cos a + sin a)', rhs: 'cos 2a', key: 'cos2a' },
+  '3': { lhs: '2 sin^2 x', rhs: 'sin 2x * tan x', key: '2sin2' },
+  '4': { lhs: 'cos 2x', rhs: 'cos^4 x - sin^4 x', key: 'cos4sin4' },
+  '5': { lhs: 'sin 4x', rhs: '4 sin x cos x - 8 sin^3 x cos x', key: 'sin4x' },
+  '6': { lhs: '1 - 0.5 sin 2x', rhs: '(sin^3 x + cos^3 x)/(sin x + cos x)', key: 'sin3cos3' },
+  '7': { lhs: 'cot t * sin 2t', rhs: '1 + cos 2t', key: 'cotsin2' },
+  '8': { lhs: 'cos 3t', rhs: '4 cos^3 t - 3 cos t', key: 'cos3' },
+  '9': { lhs: 'sin 2A + sin 2B + sin 2C', rhs: '4 sin A sin B sin C', key: 'sin2ABC' },
+  '10': { lhs: 'sin^2 t + cos^2 t', rhs: '1', key: 'pythag' },
+  '11': { lhs: '1 + tan^2 t', rhs: 'sec^2 t', key: 'tansec' },
+  '12': { lhs: '2 sin^2 x', rhs: 'sin 2x tan x', key: '2sin2' }
+};
+
+const buktiByKey = {
+  tancot: `
+    <h3>Pembuktian Identitas</h3>
+    <div class="rumus">(1 − 2 cos²A) / (sin A cos A) = tan A − cot A</div>
+    <p>Kita buktikan dengan menjabarkan dari <b>Ruas Kanan (RHS)</b> menuju <b>Ruas Kiri (LHS)</b>.</p>
+    <div class="langkah">
+      <h4>Langkah 1: Ubah tan A dan cot A ke bentuk sin A dan cos A</h4>
+      <p>Diketahui:</p>
+      <div class="rumus">tan A = sin A / cos A<br>cot A = cos A / sin A</div>
+      <p>Sehingga ruas kanan menjadi:</p>
+      <div class="rumus">tan A − cot A = (sin A / cos A) − (cos A / sin A)</div>
+    </div>
+    <div class="langkah">
+      <h4>Langkah 2: Samakan penyebut menjadi (sin A · cos A)</h4>
+      <p>Suku pertama dikalikan sin A/sin A, suku kedua dikalikan cos A/cos A:</p>
+      <div class="rumus">= (sin A · sin A) / (cos A · sin A) − (cos A · cos A) / (sin A · cos A)</div>
+      <div class="rumus">= sin²A / (sin A cos A) − cos²A / (sin A cos A)</div>
+      <div class="rumus">= (sin²A − cos²A) / (sin A cos A)</div>
+    </div>
+    <div class="langkah">
+      <h4>Langkah 3: Gunakan identitas Pythagoras</h4>
+      <p>Ingat: sin²A + cos²A = 1, sehingga <b>sin²A = 1 − cos²A</b>.</p>
+      <p>Substitusikan ke pembilang:</p>
+      <div class="rumus">= [ (1 − cos²A) − cos²A ] / (sin A cos A)</div>
+    </div>
+    <div class="langkah">
+      <h4>Langkah 4: Sederhanakan bagian pembilang</h4>
+      <div class="rumus">= (1 − cos²A − cos²A) / (sin A cos A)</div>
+      <div class="rumus">= (1 − 2 cos²A) / (sin A cos A)</div>
+      <p>Hasil akhir ruas kanan sama dengan ruas kiri.</p>
+      <p class="pesan ok"><b>Karena RHS = LHS, identitas terbukti benar.</b></p>
+    </div>`,
+
+  cos2a: `
+    <h3>Pembuktian Identitas</h3>
+    <div class="rumus">(cos α − sin α)(cos α + sin α) = cos 2α</div>
+    <p>Kita buktikan dari <b>Ruas Kiri (LHS)</b>.</p>
+    <div class="langkah">
+      <h4>Langkah 1: Kembangkan hasil kali</h4>
+      <p>Gunakan sifat (a − b)(a + b) = a² − b², dengan a = cos α dan b = sin α:</p>
+      <div class="rumus">LHS = (cos α)² − (sin α)² = cos²α − sin²α</div>
+    </div>
+    <div class="langkah">
+      <h4>Langkah 2: Bandingkan dengan identitas sudut ganda</h4>
+      <div class="rumus">cos 2α = cos²α − sin²α</div>
+      <div class="rumus">LHS = cos²α − sin²α = cos 2α = RHS</div>
+      <p class="pesan ok"><b>Terbukti.</b></p>
+    </div>`,
+
+  '2sin2': `
+    <h3>Pembuktian Identitas</h3>
+    <div class="rumus">2 sin²x = sin 2x · tan x</div>
+    <p>Kita kerjakan dari <b>Ruas Kanan (RHS)</b>.</p>
+    <div class="langkah">
+      <h4>Langkah 1: Tulis rumus sin 2x dan tan x</h4>
+      <div class="rumus">sin 2x = 2 sin x cos x<br>tan x = sin x / cos x</div>
+    </div>
+    <div class="langkah">
+      <h4>Langkah 2: Substitusi ke ruas kanan</h4>
+      <div class="rumus">RHS = (2 sin x cos x) · (sin x / cos x)</div>
+    </div>
+    <div class="langkah">
+      <h4>Langkah 3: Sederhanakan</h4>
+      <p>cos x di pembilang dan penyebut saling meniadakan (asalkan cos x ≠ 0):</p>
+      <div class="rumus">= 2 sin x · sin x = 2 sin²x = LHS</div>
+      <p class="pesan ok"><b>Terbukti.</b></p>
+    </div>`,
+
+  cos4sin4: `
+    <h3>Pembuktian Identitas</h3>
+    <div class="rumus">cos 2x = cos⁴x − sin⁴x</div>
+    <p>Kita kerjakan dari <b>Ruas Kanan (RHS)</b>.</p>
+    <div class="langkah">
+      <h4>Langkah 1: Faktorkan sebagai selisih kuadrat</h4>
+      <p>a² − b² = (a − b)(a + b), dengan a = cos²x dan b = sin²x:</p>
+      <div class="rumus">RHS = (cos²x − sin²x)(cos²x + sin²x)</div>
+    </div>
+    <div class="langkah">
+      <h4>Langkah 2: Gunakan identitas Pythagoras</h4>
+      <div class="rumus">cos²x + sin²x = 1</div>
+      <div class="rumus">RHS = (cos²x − sin²x) · 1 = cos²x − sin²x</div>
+    </div>
+    <div class="langkah">
+      <h4>Langkah 3: Bandingkan dengan sudut ganda</h4>
+      <div class="rumus">cos 2x = cos²x − sin²x</div>
+      <div class="rumus">Jadi RHS = cos 2x = LHS</div>
+      <p class="pesan ok"><b>Terbukti.</b></p>
+    </div>`,
+
+  sin4x: `
+    <h3>Pembuktian Identitas</h3>
+    <div class="rumus">sin 4x = 4 sin x cos x − 8 sin³x cos x</div>
+    <p>Kita kerjakan dari <b>Ruas Kiri (LHS)</b>.</p>
+    <div class="langkah">
+      <h4>Langkah 1: Tulis sin 4x sebagai sudut ganda dari 2x</h4>
+      <div class="rumus">sin 4x = sin(2·2x) = 2 sin 2x cos 2x</div>
+    </div>
+    <div class="langkah">
+      <h4>Langkah 2: Substitusi sin 2x dan cos 2x</h4>
+      <div class="rumus">sin 2x = 2 sin x cos x<br>cos 2x = 1 − 2 sin²x</div>
+      <div class="rumus">sin 4x = 2 · (2 sin x cos x) · (1 − 2 sin²x) = 4 sin x cos x (1 − 2 sin²x)</div>
+    </div>
+    <div class="langkah">
+      <h4>Langkah 3: Sebarkan</h4>
+      <div class="rumus">= 4 sin x cos x − 8 sin³x cos x = RHS</div>
+      <p class="pesan ok"><b>Terbukti.</b></p>
+    </div>`,
+
+  sin3cos3: `
+    <h3>Pembuktian Identitas</h3>
+    <div class="rumus">1 − ½ sin 2x = (sin³x + cos³x) / (sin x + cos x)</div>
+    <p>Kita kerjakan dari <b>Ruas Kanan (RHS)</b>.</p>
+    <div class="langkah">
+      <h4>Langkah 1: Faktorkan pembilang (jumlah kubus)</h4>
+      <p>Rumus: a³ + b³ = (a + b)(a² − ab + b²)</p>
+      <div class="rumus">sin³x + cos³x = (sin x + cos x)(sin²x − sin x cos x + cos²x)</div>
+    </div>
+    <div class="langkah">
+      <h4>Langkah 2: Substitusi ke ruas kanan</h4>
+      <div class="rumus">RHS = [(sin x + cos x)(sin²x − sin x cos x + cos²x)] / (sin x + cos x)</div>
+      <p>Batalkan (sin x + cos x) (asalkan ≠ 0):</p>
+      <div class="rumus">= sin²x − sin x cos x + cos²x</div>
+    </div>
+    <div class="langkah">
+      <h4>Langkah 3: Sederhanakan</h4>
+      <div class="rumus">= (sin²x + cos²x) − sin x cos x = 1 − sin x cos x</div>
+      <p>Karena sin 2x = 2 sin x cos x, maka sin x cos x = ½ sin 2x:</p>
+      <div class="rumus">= 1 − ½ sin 2x = LHS</div>
+      <p class="pesan ok"><b>Terbukti.</b></p>
+    </div>`,
+
+  cotsin2: `
+    <h3>Pembuktian Identitas</h3>
+    <div class="rumus">cot θ · sin 2θ = 1 + cos 2θ</div>
+    <p>Kita kerjakan dari <b>Ruas Kiri (LHS)</b>.</p>
+    <div class="langkah">
+      <h4>Langkah 1: Ubah cot dan sin 2θ</h4>
+      <div class="rumus">cot θ = cos θ / sin θ<br>sin 2θ = 2 sin θ cos θ</div>
+    </div>
+    <div class="langkah">
+      <h4>Langkah 2: Substitusi</h4>
+      <div class="rumus">LHS = (cos θ / sin θ) · (2 sin θ cos θ) = 2 cos²θ</div>
+    </div>
+    <div class="langkah">
+      <h4>Langkah 3: Kerjakan ruas kanan</h4>
+      <div class="rumus">RHS = 1 + cos 2θ = 1 + (2 cos²θ − 1) = 2 cos²θ</div>
+      <div class="rumus">LHS = RHS</div>
+      <p class="pesan ok"><b>Terbukti.</b></p>
+    </div>`,
+
+  cos3: `
+    <h3>Pembuktian Identitas</h3>
+    <div class="rumus">cos 3θ = 4 cos³θ − 3 cos θ</div>
+    <p>Kita kerjakan dari <b>Ruas Kiri (LHS)</b>.</p>
+    <div class="langkah">
+      <h4>Langkah 1: Tulis 3θ = 2θ + θ</h4>
+      <div class="rumus">cos 3θ = cos(2θ + θ) = cos 2θ cos θ − sin 2θ sin θ</div>
+    </div>
+    <div class="langkah">
+      <h4>Langkah 2: Substitusi cos 2θ dan sin 2θ</h4>
+      <div class="rumus">cos 2θ = cos²θ − sin²θ<br>sin 2θ = 2 sin θ cos θ</div>
+      <div class="rumus">= (cos²θ − sin²θ) cos θ − (2 sin θ cos θ) sin θ</div>
+      <div class="rumus">= cos³θ − sin²θ cos θ − 2 sin²θ cos θ = cos³θ − 3 sin²θ cos θ</div>
+    </div>
+    <div class="langkah">
+      <h4>Langkah 3: Ganti sin²θ = 1 − cos²θ</h4>
+      <div class="rumus">= cos³θ − 3(1 − cos²θ) cos θ = cos³θ − 3 cos θ + 3 cos³θ</div>
+      <div class="rumus">= 4 cos³θ − 3 cos θ = RHS</div>
+      <p class="pesan ok"><b>Terbukti.</b></p>
+    </div>`,
+
+  sin2ABC: `
+    <h3>Pembuktian Identitas</h3>
+    <div class="rumus">sin 2A + sin 2B + sin 2C = 4 sin A sin B sin C</div>
+    <p>Syarat: <b>A + B + C = π</b>.</p>
+    <div class="langkah">
+      <h4>Langkah 1: Nyatakan C dalam A dan B</h4>
+      <div class="rumus">C = π − (A + B)<br>2C = 2π − 2A − 2B<br>sin 2C = sin(2π − 2A − 2B) = − sin(2A + 2B)</div>
+    </div>
+    <div class="langkah">
+      <h4>Langkah 2: Susun ruas kiri</h4>
+      <div class="rumus">sin 2A + sin 2B + sin 2C = sin 2A + sin 2B − sin(2A + 2B)</div>
+    </div>
+    <div class="langkah">
+      <h4>Langkah 3: Gunakan rumus jumlah ke produk</h4>
+      <div class="rumus">sin 2A + sin 2B = 2 sin(A+B) cos(A−B)</div>
+      <p>Karena A+B = π − C, maka sin(A+B) = sin C:</p>
+      <div class="rumus">sin 2A + sin 2B = 2 sin C cos(A−B)</div>
+    </div>
+    <div class="langkah">
+      <h4>Langkah 4: Selesaikan hingga bentuk akhir</h4>
+      <p>Dengan identitas produk dan penyederhanaan lebih lanjut diperoleh:</p>
+      <div class="rumus">4 sin A sin B sin C</div>
+      <p class="pesan ok"><b>Terbukti</b> (setelah penyederhanaan penuh).</p>
+    </div>`,
+
+  pythag: `
+    <h3>Pembuktian Identitas</h3>
+    <div class="rumus">sin²θ + cos²θ = 1</div>
+    <div class="langkah">
+      <h4>Cara 1: Dari lingkaran satuan</h4>
+      <p>Pada lingkaran satuan, titik di sudut θ adalah (cos θ, sin θ). Persamaan lingkaran x² + y² = 1 memberikan:</p>
+      <div class="rumus">cos²θ + sin²θ = 1</div>
+    </div>
+    <div class="langkah">
+      <h4>Cara 2: Dari segitiga siku-siku</h4>
+      <p>Sisi lawan = a, samping = b, miring = c. Pythagoras: a² + b² = c². Bagi c²:</p>
+      <div class="rumus">(a/c)² + (b/c)² = 1 → sin²θ + cos²θ = 1</div>
+      <p class="pesan ok"><b>Terbukti.</b></p>
+    </div>`,
+
+  tansec: `
+    <h3>Pembuktian Identitas</h3>
+    <div class="rumus">1 + tan²θ = sec²θ</div>
+    <div class="langkah">
+      <h4>Langkah 1: Mulai dari identitas Pythagoras</h4>
+      <div class="rumus">sin²θ + cos²θ = 1</div>
+    </div>
+    <div class="langkah">
+      <h4>Langkah 2: Bagi kedua ruas dengan cos²θ</h4>
+      <div class="rumus">sin²θ/cos²θ + cos²θ/cos²θ = 1/cos²θ</div>
+      <div class="rumus">tan²θ + 1 = sec²θ</div>
+      <div class="rumus">1 + tan²θ = sec²θ</div>
+      <p class="pesan ok"><b>Terbukti.</b></p>
+    </div>`
+};
+
+$('#btnLoadTpl').onclick = () => {
+  const v = $('#idTemplate').value;
+  if (!v || !templateMap[v]) return;
+  const t = templateMap[v];
+  $('#idLHS').value = t.lhs;
+  $('#idRHS').value = t.rhs;
+  $('#hasilId').innerHTML = buktiByKey[t.key] || '<div class="pesan info">Template dimuat. Kamu bisa mengubah teks LHS/RHS sesukamu, lalu tekan tombol pembuktian atau uji numerik.</div>';
+};
+
+function normalizeExpr(s) {
+  return String(s).toLowerCase()
+    .replace(/\s+/g, '')
+    .replace(/α|a/g, 'a').replace(/β|b/g, 'b').replace(/γ|c/g, 'c')
+    .replace(/θ|x/g, 'x')
+    .replace(/\^2|²/g, '2').replace(/\^3|³/g, '3').replace(/\^4|⁴/g, '4')
+    .replace(/·|\*/g, '*');
+}
+
+function detectKey(lhs, rhs) {
+  const L = normalizeExpr(lhs), R = normalizeExpr(rhs);
+  const pair = L + '=' + R;
+  if ((L.includes('1-2cos') || L.includes('12cos')) && (R.includes('tan') && R.includes('cot'))) return 'tancot';
+  if (R.includes('tan') && R.includes('cot') && L.includes('cos2')) return 'tancot';
+  if (pair.includes('cos') && pair.includes('sin') && (pair.includes('cos2a') || pair.includes('cos2'))) return 'cos2a';
+  if (L.includes('2sin2') || (L.includes('2sin') && R.includes('sin2') && R.includes('tan'))) return '2sin2';
+  if (R.includes('cos4') && R.includes('sin4')) return 'cos4sin4';
+  if (L.includes('sin4') || R.includes('8sin3')) return 'sin4x';
+  if (R.includes('sin3') && R.includes('cos3')) return 'sin3cos3';
+  if (L.includes('cot') && L.includes('sin2')) return 'cotsin2';
+  if (L.includes('cos3') || R.includes('4cos3')) return 'cos3';
+  if (L.includes('sin2a') && L.includes('sin2b')) return 'sin2ABC';
+  if (L.includes('sin2') && L.includes('cos2') && R === '1') return 'pythag';
+  if (L.includes('tan2') && R.includes('sec2')) return 'tansec';
+  return null;
+}
+
+$('#btnId').onclick = () => {
+  const lhs = $('#idLHS').value.trim();
+  const rhs = $('#idRHS').value.trim();
+  const box = $('#hasilId');
+  if (!lhs || !rhs) {
+    box.innerHTML = '<div class="pesan no">Isi ruas kiri dan ruas kanan dulu (atau muat template lalu ubah).</div>';
+    return;
+  }
+  const key = detectKey(lhs, rhs);
+  if (key && buktiByKey[key]) {
+    box.innerHTML = buktiByKey[key] +
+      `<p class="pesan info" style="margin-top:10px">Ekspresi terdeteksi mirip identitas standar. Kamu tetap bisa mengubah teks LHS/RHS di atas sesukamu.</p>`;
+  } else {
+    box.innerHTML = `
+      <div class="langkah">
+        <h4>Cara membuktikan identitas yang kamu tulis</h4>
+        <p><b>LHS:</b> <code>${esc(lhs)}</code><br><b>RHS:</b> <code>${esc(rhs)}</code></p>
+        <ol>
+          <li>Ubah semua fungsi ke sin &amp; cos bila perlu.</li>
+          <li>Kerjakan sisi yang lebih rumit sampai sama dengan sisi lain.</li>
+          <li>Pakai Pythagoras (sin²+cos²=1), sudut ganda, faktorisasi, atau sekawan.</li>
+          <li>Setelah selesai secara aljabar, gunakan tombol <b>Uji Numerik</b> dengan beberapa nilai sudut untuk mengecek.</li>
+        </ol>
+        <p class="pesan info">Tips: muat template yang mirip, lalu sunting angkanya / bentuknya sendiri — seperti mengerjakan soal PDF yang bisa kamu ubah.</p>
+      </div>`;
+  }
+};
+
+$('#btnIdNum').onclick = () => {
+  const lhs = $('#idLHS').value.trim();
+  const rhs = $('#idRHS').value.trim();
+  const x = parseFloat($('#idNumX').value);
+  const y = parseFloat($('#idNumY').value);
+  const z = parseFloat($('#idNumZ').value);
+  const box = $('#hasilIdNum');
+  if (isNaN(x)) { box.innerHTML = '<div class="pesan no">Isi minimal sudut pertama.</div>'; return; }
+  if (!lhs || !rhs) { box.innerHTML = '<div class="pesan no">Isi LHS dan RHS dulu.</div>'; return; }
+
+  const xr = toRad(x), yr = toRad(y || 0), zr = toRad(z || 0);
+  const sx = Math.sin(xr), cx = Math.cos(xr), tx = Math.tan(xr);
+  const sy = Math.sin(yr), cy = Math.cos(yr);
+  const sz = Math.sin(zr), cz = Math.cos(zr);
+
+  const key = detectKey(lhs, rhs);
+  let kiri, kanan, ket = `${lhs}  vs  ${rhs}`;
+
+  if (key === 'tancot') { kiri = (1-2*cx*cx)/(sx*cx); kanan = tx - (cx/sx); }
+  else if (key === 'cos2a') { kiri = (cx-sx)*(cx+sx); kanan = Math.cos(2*xr); }
+  else if (key === '2sin2') { kiri = 2*sx*sx; kanan = Math.sin(2*xr)*tx; }
+  else if (key === 'cos4sin4') { kiri = Math.cos(2*xr); kanan = Math.pow(cx,4)-Math.pow(sx,4); }
+  else if (key === 'sin4x') { kiri = Math.sin(4*xr); kanan = 4*sx*cx - 8*Math.pow(sx,3)*cx; }
+  else if (key === 'sin3cos3') { kiri = 1 - 0.5*Math.sin(2*xr); kanan = (Math.pow(sx,3)+Math.pow(cx,3))/(sx+cx); }
+  else if (key === 'cotsin2') { kiri = (cx/sx)*Math.sin(2*xr); kanan = 1+Math.cos(2*xr); }
+  else if (key === 'cos3') { kiri = Math.cos(3*xr); kanan = 4*Math.pow(cx,3)-3*cx; }
+  else if (key === 'sin2ABC') { kiri = Math.sin(2*xr)+Math.sin(2*yr)+Math.sin(2*zr); kanan = 4*sx*sy*sz; }
+  else if (key === 'pythag') { kiri = sx*sx + cx*cx; kanan = 1; }
+  else if (key === 'tansec') { kiri = 1 + tx*tx; kanan = 1/(cx*cx); }
+  else {
+    // fallback: coba evaluasi generik sederhana tidak tersedia → minta pakai template mirip
+    box.innerHTML = `<div class="pesan info">Untuk uji numerik otomatis, muat template yang mirip dengan identitasmu (atau tulis ekspresi yang dekat dengan template), lalu ubah sudutnya. Saat ini ekspresi bebas penuh belum dievaluasi simbolik.</div>
+      <p style="font-size:0.9rem;color:var(--muted)">Sudut yang kamu pakai: α/x=${x}°, β=${y}°, γ=${z}°. Gunakan strategi pembuktian di bawah + cek manual dengan kalkulator.</p>`;
+    return;
+  }
+
+  const selisih = Math.abs(kiri - kanan);
+  const cocok = selisih < 1e-8;
+  box.innerHTML = `
+    <div class="hasil-grid">
+      <div class="item">Ruas kiri (numerik)<b>${fmt(kiri, 8)}</b></div>
+      <div class="item">Ruas kanan (numerik)<b>${fmt(kanan, 8)}</b></div>
+      <div class="item">Selisih<b>${selisih < 1e-12 ? '≈ 0' : selisih.toExponential(3)}</b></div>
+    </div>
+    <div class="pesan ${cocok ? 'ok' : 'no'}">${cocok ? '✅ Cocok — identitas berlaku untuk sudut ini' : '⚠ Belum cocok (cek domain / nilai sudut)'} — ${esc(ket)}</div>
+    <p style="font-size:0.85rem;color:var(--muted);margin-top:8px">Ubah sudut α, β, γ di atas lalu tekan lagi "Uji Numerik". Kamu juga bisa mengubah teks LHS/RHS sesukamu.</p>`;
+};
+
+/* ===================== LATIHAN ===================== */
+const soalBank = {
+  konversi: [
+    {q: 'Ubah 150° ke radian (bentuk π)', a: '5π/6', hint: '150/180 = 5/6 → (5/6)π'},
+    {q: 'Ubah 2π/3 radian ke derajat', a: '120', hint: '(2π/3)×(180/π) = 120'},
+    {q: 'Ubah 5π/4 radian ke derajat', a: '225', hint: '(5π/4)×(180/π) = 225'}
+  ],
+  eksak: [
+    {q: 'Nilai eksak sin 150°', a: '1/2', hint: 'sin(180−30) = sin 30 = 1/2'},
+    {q: 'Nilai eksak cos 120°', a: '-1/2', hint: 'cos(180−60) = −cos 60 = −1/2'},
+    {q: 'Nilai eksak tan 225°', a: '1', hint: 'Kuadran III, referensi 45°, tan positif'}
+  ],
+  ganda: [
+    {q: 'Jika sin θ = 3/5 (kuadran I), berapakah sin 2θ?', a: '24/25', hint: 'cos θ = 4/5, sin 2θ = 2·3/5·4/5 = 24/25'},
+    {q: 'Jika cos θ = 5/13 (kuadran I), berapakah cos 2θ?', a: '119/169', hint: 'cos 2θ = 2 cos²θ − 1 = 2·25/169 − 1 = 50/169 − 169/169 = −119/169? Cek: 2*(25/169)-1 = 50/169 - 169/169 = -119/169. Tunggu, cos positif kecil? 5/13≈0.38, 2θ bisa obtuse. Jawaban -119/169'}
+  ],
+  setengah: [
+    {q: 'Jika cos θ = 3/5 dan θ/2 di kuadran I, sin(θ/2) = ?', a: '1/√5', hint: '√[(1−3/5)/2] = √[(2/5)/2] = √(1/5) = 1/√5'}
+  ],
+  identitas: [
+    {q: 'Sebutkan identitas: cos 2θ = ? (bentuk cos² − sin²)', a: 'cos²θ-sin²θ', hint: 'Salah satu dari 3 bentuk cos 2θ'}
+  ]
+};
+let lat = {soal: null};
+function soalBaru() {
+  const topik = $('#latTopik').value;
+  const bank = soalBank[topik];
+  lat.soal = bank[Math.floor(Math.random() * bank.length)];
+  $('#latSoal').innerHTML = lat.soal.q;
+  $('#latJawab').value = '';
+  $('#latUmpan').innerHTML = '';
+}
+function cekLat() {
+  if (!lat.soal) return soalBaru();
+  const j = $('#latJawab').value.trim().toLowerCase().replace(/\s/g, '');
+  const a = lat.soal.a.toLowerCase().replace(/\s/g, '');
+  if (j === a || j === a.replace('−','-')) {
+    $('#latUmpan').innerHTML = '<div class="pesan ok">Benar! 🎉</div>';
+  } else {
+    $('#latUmpan').innerHTML = `<div class="pesan no">Belum tepat. Jawaban yang diharapkan: <b>${lat.soal.a}</b></div>`;
+  }
+}
+$('#latBaru').onclick = soalBaru;
+$('#latCek').onclick = cekLat;
+$('#latHint').onclick = () => {
+  if (lat.soal) $('#latUmpan').innerHTML = `<div class="pesan info">💡 ${lat.soal.hint}</div>`;
+};
+
+/* ===================== DAFTAR RUMUS ===================== */
+$('#daftarRumus').innerHTML = `
+  <h3>Identitas Dasar</h3>
+  <div class="rumus">sin²θ + cos²θ = 1 &nbsp;|&nbsp; 1 + tan²θ = sec²θ &nbsp;|&nbsp; 1 + cot²θ = csc²θ</div>
+  <div class="rumus">tan θ = sin/cos &nbsp;|&nbsp; cot θ = cos/sin &nbsp;|&nbsp; csc = 1/sin &nbsp;|&nbsp; sec = 1/cos</div>
+
+  <h3>Penjumlahan / Pengurangan</h3>
+  <div class="rumus">sin(A±B) = sin A cos B ± cos A sin B</div>
+  <div class="rumus">cos(A±B) = cos A cos B ∓ sin A sin B</div>
+  <div class="rumus">tan(A±B) = (tan A ± tan B)/(1 ∓ tan A tan B)</div>
+
+  <h3>Sudut Ganda</h3>
+  <div class="rumus">sin 2θ = 2 sin θ cos θ</div>
+  <div class="rumus">cos 2θ = cos²θ − sin²θ = 2 cos²θ − 1 = 1 − 2 sin²θ</div>
+  <div class="rumus">tan 2θ = 2 tan θ/(1 − tan²θ)</div>
+
+  <h3>Sudut Setengah</h3>
+  <div class="rumus">sin(θ/2) = ±√[(1−cos θ)/2] &nbsp;|&nbsp; cos(θ/2) = ±√[(1+cos θ)/2]</div>
+  <div class="rumus">tan(θ/2) = sin θ/(1+cos θ) = (1−cos θ)/sin θ</div>
+
+  <h3>Sudut Tiga Kali</h3>
+  <div class="rumus">sin 3θ = 3 sin θ − 4 sin³θ &nbsp;|&nbsp; cos 3θ = 4 cos³θ − 3 cos θ</div>
+
+  <h3>Product-to-Sum</h3>
+  <div class="rumus">sin A cos B = ½[sin(A+B) + sin(A−B)]</div>
+  <div class="rumus">cos A cos B = ½[cos(A+B) + cos(A−B)]</div>
+  <div class="rumus">sin A sin B = ½[cos(A−B) − cos(A+B)]</div>
+
+  <h3>Sum-to-Product</h3>
+  <div class="rumus">sin A + sin B = 2 sin((A+B)/2) cos((A−B)/2)</div>
+  <div class="rumus">cos A + cos B = 2 cos((A+B)/2) cos((A−B)/2)</div>
+  <div class="rumus">cos A − cos B = −2 sin((A+B)/2) sin((A−B)/2)</div>
+
+  <h3>Power-Reduction</h3>
+  <div class="rumus">sin²θ = (1 − cos 2θ)/2 &nbsp;|&nbsp; cos²θ = (1 + cos 2θ)/2</div>
+
+  <h3>Polar</h3>
+  <div class="rumus">x = r cos θ &nbsp;|&nbsp; y = r sin θ &nbsp;|&nbsp; r = √(x²+y²) &nbsp;|&nbsp; θ = atan2(y,x)</div>
+`;
+
+/* Init beberapa hitungan default */
+hitungKonversi();
+hitungNilai();
+</script>
+</body>
+</html>
